@@ -1,0 +1,76 @@
+# 📄 **Phase 5: AWS Chatbot Integration — Real-Time Slack Alerts**
+
+This phase configures AWS Chatbot to deliver real-time security alerts from SNS to your Slack channel.
+We assume you already have an SNS Topic (e.g., `soar-alerts-topic-<unique-suffix>`) created in Phase 4.
+
+
+purpose
+
+✅ Deliver security alerts from AWS (GuardDuty, Inspector, etc.) to your security team via Slack, in addition to email.
+✅ Enables faster incident response and better visibility in collaboration tools.
+
+---
+
+## 🧾 **Steps to Set Up AWS Chatbot with Slack (via Console)**
+
+Step 1: Open AWS Chatbot Console
+
+* Sign in to the [AWS Console](https://console.aws.amazon.com/).
+* Search for **AWS Chatbot** in the search bar and open it.
+
+Step 2: Configure a New Slack Workspace
+
+* On the AWS Chatbot page, click **Configure new client** → select **Slack**.
+* Click **Configure** and authorize AWS to access your Slack workspace:
+
+  * Login to your Slack workspace.
+  * Approve AWS Chatbot permissions.
+
+
+Step 3: Create a Chatbot Configuration
+
+* Back in the AWS Chatbot Console, click **Slack** → **Configure new channel**.
+* Select your **Slack workspace** and then select a **channel** (e.g., `#security-alerts`) where alerts will be posted.
+* Name your Chatbot configuration something like:
+
+  > `Slack-Security-Alerts-Bot`
+
+
+Step 4: Select SNS Topic
+
+* Under **IAM permissions**, choose **SNS topics**.
+* Select your existing SNS topic (created in Phase 4), e.g.:
+
+  > `soar-alerts-topic-<unique-suffix>`
+
+Step 5: Configure Permissions
+
+* You can use the default IAM role (`AWSServiceRoleForAWSChatbot`) or create a custom one if you prefer fine-grained permissions.
+* Make sure the role has `sns:Subscribe` and `sns:Receive` permissions.
+
+Step 6: Review and Create
+
+* Review the configuration details:
+
+  * Workspace: `<your-workspace>`
+  * Channel: `#security-alerts`
+  * SNS Topic: `soar-alerts-topic-<unique-suffix>`
+  * Role: `AWSServiceRoleForAWSChatbot`
+* Click **Create
+
+
+Step 7: Test Alerts
+
+* Go to the SNS Topic Console → select your SNS topic.
+* Click **Publish message**.
+* Enter a test message (subject & body).
+* Publish it → you should see the alert in your Slack `#security-alerts` channel.
+
+
+Summary
+
+✅ Your SNS topic is now connected to Slack via AWS Chatbot.
+✅ Any alerts published to the SNS topic (from GuardDuty, Inspector, etc.) will appear in Slack in real-time.
+
+
+
